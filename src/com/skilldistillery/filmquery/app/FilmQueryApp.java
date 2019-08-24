@@ -1,10 +1,12 @@
 package com.skilldistillery.filmquery.app;
 
+import java.util.List;
 import java.util.Scanner;
 import java.sql.*;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
 import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
+import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class FilmQueryApp {
@@ -14,12 +16,18 @@ public class FilmQueryApp {
   public static void main(String[] args) {
     FilmQueryApp app = new FilmQueryApp();
     app.test();
-//    app.launch();
+    //app.launch();
+    //app.findActByFilmID();
+    
   }
 
-  private void test() {
-    Film film = db.findFilmById(1);
-    System.out.println(film);
+
+
+private void test() {
+   Film film = db.findFilmById(110);
+    //System.out.println(film);
+    List<Actor>actors = db.findActorsByFilmId(1);
+    List<Film> filmX = db.findFilmByKey("ALA");
   }
 
   private void launch() {

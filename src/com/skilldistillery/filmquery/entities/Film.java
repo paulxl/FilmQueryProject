@@ -101,6 +101,9 @@ public class Film {
 				+ ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate + ", length=" + length
 				+ ", replacementCost=" + replacementCost + ", rating=" + rating + ", features=" + features + "]";
 	}
+	public String titleOnly() {
+		return "Film Title is: "+ title;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -166,6 +169,7 @@ public class Film {
 			return false;
 		return true;
 	}
+	
 	
 	
 
