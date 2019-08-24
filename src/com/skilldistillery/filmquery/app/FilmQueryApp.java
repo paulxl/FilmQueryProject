@@ -15,20 +15,20 @@ public class FilmQueryApp {
 
   public static void main(String[] args) {
     FilmQueryApp app = new FilmQueryApp();
-    app.test();
-    //app.launch();
+    //app.test();
+    app.launch();
     //app.findActByFilmID();
     
   }
 
 
 
-private void test() {
-   Film film = db.findFilmById(110);
-    //System.out.println(film);
-    List<Actor>actors = db.findActorsByFilmId(1);
-    List<Film> filmX = db.findFilmByKey("ALA");
-  }
+//private void test() {
+//   Film film = db.findFilmById(110);
+//    //System.out.println(film);
+//    List<Actor>actors = db.findActorsByFilmId(1);
+//    List<Film> filmX = db.findFilmByKey("ALA");
+//  }
 
   private void launch() {
     Scanner input = new Scanner(System.in);
@@ -39,7 +39,49 @@ private void test() {
   }
 
   private void startUserInterface(Scanner input) {
+	  int var, rav;
+	  String wxy;
+	 
+	  System.out.println("This APP lets you look up the following:");
+	  System.out.println("(1) Look up a film by its id  ");
+	  System.out.println("(2) Look up film by a search word ");
+	  System.out.println("(3) List of actors in a film where the user inputs the film id ");
+	  System.out.println("(8) Exits the program.");
+	  System.out.println("Enter your number choice:");
+	  var = input.nextInt();
+
+		switch (var) {
+		case 1:
+			System.out.println("We now need the film id (where the id(s) range from integer 1-1000)");
+			System.out.println("Please enter a number from 1 to 1000 ");
+			rav = input.nextInt();
+			Film film = db.findFilmById(rav);
+			System.out.println();
+			startUserInterface(input);
+			break;
+		case 2:
+			System.out.println("Now enter a word or part of word to search film titles ");
+			wxy = input.next();
+			List<Film> filmX = db.findFilmByKey(wxy);
+			System.out.println();
+			startUserInterface(input);
+			break;
+		case 3:
+			System.out.println("We now need the film id (where the id(s) range from integer 1-1000)");
+			System.out.println("Please enter a number from 1 to 1000 ");
+			rav = input.nextInt();
+			List<Actor>actors = db.findActorsByFilmId(rav);
+			System.out.println();
+			startUserInterface(input);
+			break;
+		case 8:
+			System.out.println("Ending Session.");
+			break;
+		default:
+			System.out.println("ERROR try again!");
+			startUserInterface(input);
+			break;
     
   }
-
+  }
 }
