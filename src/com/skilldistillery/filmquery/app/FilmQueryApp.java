@@ -37,6 +37,7 @@ public class FilmQueryApp {
   private void startUserInterface(Scanner input) {
 	  int var, rav, act;
 	  String wxy;
+	  System.out.println("===================================================================");
 	  System.out.println();// blank line to give space for readability
 	  System.out.println("This APP lets you look up the following:");
 	  System.out.println("(1) Look up a film by its id  ");
