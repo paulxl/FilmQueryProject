@@ -49,6 +49,9 @@ public class Actor {
 		return actorId +"\t"+ firstName +" "+lastName;
 		//return "Actor [actorId=" + actorId + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
+	public String justActor() {
+		return firstName +"  "+ lastName;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

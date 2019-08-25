@@ -6,6 +6,7 @@ public class Film {
 	private String description;
 	private int releaseYear;
 	private int languageId;
+	private String language;
 	private int rentalDuration;
 	private double rentalRate;
 	private int length;
@@ -28,6 +29,12 @@ public class Film {
 		this.features = features;
 	}
 	public Film() {		
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	public int getFilmId() {
 		return filmId;
@@ -103,6 +110,13 @@ public class Film {
 	}
 	public String titleOnly() {
 		return "Film Title is: "+ title;
+	}
+	public String filmMostInfo() {
+		return "Title:  "+ title + "\nDescription:  " + description +
+				"\nRelease Year: " + releaseYear +"\nRating:  "+ rating;				
+	}
+	public String onlyLanguage() {
+		return "Language:  "+ language;
 	}
 	@Override
 	public int hashCode() {

@@ -29,8 +29,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	@Override
 	public Film findFilmById(int filmId) {
-		//Film film = null;
-		String sqltxt ="SELECT film.title FROM film WHERE film.id= ?; ";
+		Film film = null;
+		String sqltxt ="SELECT film.title, film.description, film.release_year, film.rating,"
+				+ "language.name FROM film JOIN language ON film.language_id = language.id  WHERE film.id= ?; ";
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, userName, passWord);
@@ -39,9 +40,38 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			ResultSet rs = stmt.executeQuery();
 			
 			if (rs.next()) {
-				Film film = new Film();
+				film = new Film();
 				film.setTitle(rs.getString("film.title"));
-				System.out.println(film.titleOnly());
+				film.setDescription(rs.getString("film.description"));
+				film.setReleaseYear(rs.getInt("film.release_Year"));
+				film.setRating(rs.getString("film.rating"));
+				film.setLanguage(rs.getString("language.name"));
+				System.out.println(film.filmMostInfo());
+//				switch ("film.language_id") {
+//				case "1":
+//					System.out.println("Language:  English");
+//					break;
+//				case "2":
+//					System.out.println("Language:  Italian");
+//					break;
+//				case "3":
+//					System.out.println("Language:  Japanese");
+//					break;
+//				case "4":
+//					System.out.println("Language:  Maderine");
+//					break;
+//				case "5":
+//					System.out.println("Language:  French");
+//					break;
+//				case "6":
+//					System.out.println("Language:  German");
+//					break;
+//				default:
+//					System.out.println("Language:  Unknown");
+//				}
+				System.out.println("film.onlyLanguage");
+				System.out.println("Cast :");
+				findActorsByFilmId(filmId);
 			}
 		} catch (SQLException e) {
 
@@ -52,7 +82,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	@Override
 	public List<Film> findFilmByKey(String inquire) {
-		List<Film> films = new ArrayList<>();
+		//List<Film> films = new ArrayList<>();
 		this.filmList = new ArrayList<Film>();
 		try {
 			Connection conn = DriverManager.getConnection(URL, userName, passWord);
@@ -103,8 +133,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				actor.setLastName(rs.getString("actor.first_name"));
 				actor.setFirstName(rs.getString("actor.last_name"));				
 				actorList.add(actor);
-				System.out.println(actor);
-				
+				//System.out.println(actor);
+				System.out.println("\t" + actor.justActor());
 			}
 //			    while (rs.next()) {
 //			      System.out.println(rs.getString(1) + " "
