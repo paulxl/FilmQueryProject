@@ -49,8 +49,8 @@ public class Actor {
 		return actorId +"\t"+ firstName +" "+lastName;
 		//return "Actor [actorId=" + actorId + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
-	public String justActor() {
-		return firstName +"  "+ lastName;
+	public void justActor() {
+		System.out.println("\t"+ this.firstName + " " + this.lastName);
 	}
 	@Override
 	public int hashCode() {
