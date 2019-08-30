@@ -35,12 +35,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			Connection conn = DriverManager.getConnection(URL, userName, passWord);
 			String sqltxt = "SELECT film.title, film.description, film.release_year, film.rating,"
 					+ "language.name FROM film JOIN language ON film.language_id = language.id  "
-					+  "WHERE film.id= ?; ";
-
+					+ "WHERE film.id= ?; ";
 			PreparedStatement stmt = conn.prepareStatement(sqltxt);
 			stmt.setInt(1, filmId);
 			ResultSet rs = stmt.executeQuery();
-
 			if (rs.next()) {
 				film = new Film();
 				film.setTitle(rs.getString("film.title"));
@@ -48,38 +46,38 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setReleaseYear(rs.getInt("film.release_Year"));
 				film.setRating(rs.getString("film.rating"));
 				film.setLanguage(rs.getString("language.name"));
-
 			}
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-
 		return film;
 	}
 
 	@Override
 	public List<Film> findFilmByKey(String inquire) {
-		// List<Film> films = new ArrayList<>();
-		this.filmList = new ArrayList<Film>();
-		
-		String sqltxt = "SELECT film.title, film.description, film.release_year, film.rating"
-				+ " FROM film WHERE title LIKE ?; ";
+		List<Film> filmList = new ArrayList<>();
+
+		String sqltxt = "SELECT film.id, film.title, film.description, film.release_year, film.rating"
+				+ " FROM film  WHERE title LIKE ? OR description LIKE ?; ";
 		try {
 			Connection conn = DriverManager.getConnection(URL, userName, passWord);
 			PreparedStatement stmt = conn.prepareStatement(sqltxt);
 			stmt.setString(1, "%" + inquire + "%");
+			stmt.setString(2, "%" + inquire + "%");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				Film film = new Film();
 				film.setTitle(rs.getString("film.title"));
-				film.setDescription("film.description");
+				film.setDescription(rs.getString("film.description"));
 				film.setReleaseYear(rs.getInt("film.release_Year"));
 				film.setRating(rs.getString("film.rating"));
 				filmList.add(film);
 
 			}
+			rs.close();
+			stmt.close();
+			conn.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -95,11 +93,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		this.actorList = new ArrayList<Actor>();
 		String sqltxt = "SELECT actor.id, actor.first_name, actor.last_name FROM actor "
 				+ "JOIN film_actor ON film_actor.actor_id = actor.id " + "Join film ON film_actor.film_id =film.id  "
-				+ "WHERE film.id = ?";		
-//		int actorId = 0;		
-//		String firstName = null;
-//		String lastName = null;
-
+				+ "WHERE film.id = ?";
 		try (Connection conn = DriverManager.getConnection(URL, userName, passWord);) {
 			PreparedStatement stmt = conn.prepareStatement(sqltxt);
 			stmt.setInt(1, filmId);
@@ -111,20 +105,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				actor.setLastName(rs.getString("actor.first_name"));
 				actor.setFirstName(rs.getString("actor.last_name"));
 				actorList.add(actor);
-				// System.out.println(actor);
-				// System.out.println("\t" + actor.justActor());
+
 			}
-//			    while (rs.next()) {
-//			      System.out.println(rs.getString(1) + " "
-//			                          + rs.getString(2) + " " + rs.getString(3));
-//			    }
+
 		} catch (SQLException e) {
 			System.err.println(e);
-		} // ...
-			// PreparedStatement stmt = conn.prepareStatement(sql);
-			// stmt.setInt(1,actorId);
-			// ResultSet actorResult = stmt.executeQuery();
-
+		}
 		return actorList;
 	}
 

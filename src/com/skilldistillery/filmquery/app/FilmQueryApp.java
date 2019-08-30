@@ -10,112 +10,110 @@ import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class FilmQueryApp {
-  
-  DatabaseAccessor db = new DatabaseAccessorObject();
 
-  public static void main(String[] args) {
-    FilmQueryApp app = new FilmQueryApp();
-    //app.test();
-    app.launch();
-    //app.findActByFilmID();    
-  }
+	DatabaseAccessor db = new DatabaseAccessorObject();
+	boolean keepGoing = true;
+
+	public static void main(String[] args) {
+		FilmQueryApp app = new FilmQueryApp();
+		// app.test();
+		app.launch();
+		// app.findActByFilmID();
+	}
+
 //private void test() {
 //   Film film = db.findFilmById(110);
 //    //System.out.println(film);
 //    List<Actor>actors = db.findActorsByFilmId(1);
 //    List<Film> filmX = db.findFilmByKey("ALA");
 //  }
+	private void launch() {
+		Scanner input = new Scanner(System.in);
+		startUserInterface(input);
+		input.close();
+	}
 
-  private void launch() {
-    Scanner input = new Scanner(System.in);
-    
-    startUserInterface(input);
-    
-    input.close();
-  }
+	private void startUserInterface(Scanner input) {
+		int choice, filmId, actorId;
+		String wxy;
+		do {
+			System.out.println("===================================================================");
+			System.out.println();// blank line to give space for readability
+			System.out.println("This APP lets you look up the following:");
+			System.out.println("(1) Look up a film by its id  ");
+			System.out.println("(2) Look up film by a search word ");
+			System.out.println("(3) List of actors in a film where the user inputs the film id ");
+			System.out.println("(4) Look up actor by actor id ");
+			System.out.println("(8) Exits the program.");
+			System.out.println("Enter your number choice:");
+			choice = input.nextInt();
 
-  private void startUserInterface(Scanner input) {
-	  int var, rav, act;
-	  String wxy;
-	  System.out.println("===================================================================");
-	  System.out.println();// blank line to give space for readability
-	  System.out.println("This APP lets you look up the following:");
-	  System.out.println("(1) Look up a film by its id  ");
-	  System.out.println("(2) Look up film by a search word ");
-	  System.out.println("(3) List of actors in a film where the user inputs the film id ");
-	  System.out.println("(4) Look up actor by actor id ");
-	  System.out.println("(8) Exits the program.");
-	  System.out.println("Enter your number choice:");
-	  var = input.nextInt();
+			switch (choice) {
+			case 1:
+				System.out.println("We now need the film id : Please enter its number.");
 
-		switch (var) {
-		case 1:
-			System.out.println("We now need the film id (where the id(s) range from integer 1-1000)");
-			System.out.println("Please enter a number from 1 to 1000 ");
-			rav = input.nextInt();
-			if (rav <1 || rav >1000) {
-				System.out.println(rav +" error! id not in-bounds ");
-				startUserInterface(input);
-			}	else {
-			Film film = db.findFilmById(rav);
-			film.filmMostInfo();
-			System.out.println("Cast :");
-			List<Actor>actors = db.findActorsByFilmId(rav);
-			for (Actor actor : actors) {
-				actor.justActor();
+				filmId = input.nextInt();
+				Film film = db.findFilmById(filmId);
+				if (film == null) {
+					System.out.println(filmId + "  That id does not match a film.  Try again.\n");
+					keepGoing = true;
+					break;
+
+				} else {
+					film.filmMostInfo();
+					System.out.println("Cast :");
+					List<Actor> actors = db.findActorsByFilmId(filmId);
+					for (Actor actor : actors) {
+						actor.justActor();
+					}
+				}
+				keepGoing = true;
+
+				break;
+			case 2:
+				System.out.println("Now enter a keyword to search film titles or description \n");
+				String key = input.next();
+				List<Film> filmX = db.findFilmByKey(key);
+				for (Film film2 : filmX) {
+					film2.filmBasics();
+				}
+				if (filmX.isEmpty()) {
+					System.out.println(key + "  Does not match any keywords in films.\n");
+				}
+				keepGoing = true;
+
+				break;
+			case 3:
+				System.out.println("We now need the film id : Please enter the number.");
+				filmId = input.nextInt();
+				List<Actor> actors2 = db.findActorsByFilmId(filmId);
+				for (Actor actor : actors2) {
+					actor.justActor();
+				}
+				keepGoing = true;
+				break;
+			case 4:
+				System.out.println("We need to know the actor id.  Please enter the actor's id.");
+
+				actorId = input.nextInt();
+				Actor actor2 = db.findActorById(actorId);
+				if (actor2 == null) {
+					System.out.println(actor2 + " That id does not match an actor.\n");
+				} else {
+					actor2.justActor();
+				}
+				keepGoing = true;
+				break;
+			case 8:
+				System.out.println("Ending Session.");
+				keepGoing = false;
+				break;
+			default:
+				System.out.println("ERROR try again!");
+				keepGoing = true;
+				break;
 			}
-			//System.out.println(film);
-			startUserInterface(input);
-			}
-			break;
-		case 2:
-			System.out.println("Now enter a word or part of word to search film titles ");
-			wxy = input.next();
-			List<Film> filmX = db.findFilmByKey(wxy);
-			for (Film film : filmX) {
-				film.filmMostInfo();
-			}
-			if(filmX.isEmpty()) {
-				System.out.println(wxy + "  Does not match any keywords in films.");
-			}
-			startUserInterface(input);
-			break;
-		case 3:
-			System.out.println("We now need the film id (where the id(s) range from integer 1-1000)");
-			System.out.println("Please enter a number from 1 to 1000 ");
-			rav = input.nextInt();
-			if( rav < 1 || rav >1000) {
-				System.out.println(rav + " error! id not in-bounds ");
-				startUserInterface(input);
-			}	else {
-			List<Actor>actors = db.findActorsByFilmId(rav);
-			for (Actor actor : actors) {
-				actor.justActor();
-			}
-			startUserInterface(input);
-			}
-			break;
-		case 4:
-			System.out.println("We need to know the actor id (where the id(s) range from integer 1-200)");
-			System.out.println("Please enter a number from 1 to 200");
-			act = input.nextInt();
-			if(act <1 || act>200) {
-				System.out.println(act+ " error! id not in-bounds ");
-				startUserInterface(input);
-			} else {
-				Actor actor2 = db.findActorById(act);
-				actor2.justActor();
-			}
-			startUserInterface(input);
-			break;
-		case 8:
-			System.out.println("Ending Session.");
-			break;
-		default:
-			System.out.println("ERROR try again!");
-			startUserInterface(input);
-			break;
-    
-  }
-  }
+		} while (keepGoing);
+	}
+
 }

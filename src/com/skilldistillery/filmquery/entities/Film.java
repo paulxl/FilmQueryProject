@@ -145,6 +145,10 @@ public class Film {
 		System.out.println("Title:  " + title + "\nDescription:  " + description + "\nRelease Year: " + releaseYear
 				+ "\nRating:  " + rating + "\nLanguage: " + this.language);
 	}
+	public void filmBasics() {
+		System.out.println("Title:  " + title + "\nDescription:  " + description + "\nRelease Year: " + releaseYear
+				+ "\nRating:  " + rating);
+	}
 
 	public void onlyLanguage() {
 		System.out.println("Language is: " + this.language);
