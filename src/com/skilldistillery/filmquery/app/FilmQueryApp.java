@@ -90,6 +90,10 @@ public class FilmQueryApp {
 				for (Actor actor : actors2) {
 					actor.justActor();
 				}
+				
+				if (actors2.isEmpty()) {
+					System.out.println( filmId + "  Does not match any film ids.\n");
+				}
 				keepGoing = true;
 				break;
 			case 4:
@@ -98,7 +102,7 @@ public class FilmQueryApp {
 				actorId = input.nextInt();
 				Actor actor2 = db.findActorById(actorId);
 				if (actor2 == null) {
-					System.out.println(actor2 + " That id does not match an actor.\n");
+					System.out.println(actorId + " That id does not match an actor.\n");
 				} else {
 					actor2.justActor();
 				}

@@ -91,8 +91,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		// public Actor findActorById(int actorId) {
 		List<Actor> actors = new ArrayList<>();
 		this.actorList = new ArrayList<Actor>();
+		//actors = null;
 		String sqltxt = "SELECT actor.id, actor.first_name, actor.last_name FROM actor "
-				+ "JOIN film_actor ON film_actor.actor_id = actor.id " + "Join film ON film_actor.film_id =film.id  "
+				+ "JOIN film_actor ON film_actor.actor_id = actor.id Join film ON film_actor.film_id =film.id  "
 				+ "WHERE film.id = ?";
 		try (Connection conn = DriverManager.getConnection(URL, userName, passWord);) {
 			PreparedStatement stmt = conn.prepareStatement(sqltxt);
@@ -105,7 +106,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				actor.setLastName(rs.getString("actor.first_name"));
 				actor.setFirstName(rs.getString("actor.last_name"));
 				actorList.add(actor);
-
 			}
 
 		} catch (SQLException e) {
