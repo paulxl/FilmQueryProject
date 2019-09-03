@@ -35,7 +35,7 @@ public class FilmQueryApp {
 
 	private void startUserInterface(Scanner input) {
 		int choice, filmId, actorId;
-		String wxy;
+		
 		do {
 			System.out.println("===================================================================");
 			System.out.println();// blank line to give space for readability

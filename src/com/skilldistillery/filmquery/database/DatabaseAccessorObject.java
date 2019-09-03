@@ -88,10 +88,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
-		// public Actor findActorById(int actorId) {
-		List<Actor> actors = new ArrayList<>();
+		
+		//List<Actor> actors = new ArrayList<>();
 		this.actorList = new ArrayList<Actor>();
-		//actors = null;
 		String sqltxt = "SELECT actor.id, actor.first_name, actor.last_name FROM actor "
 				+ "JOIN film_actor ON film_actor.actor_id = actor.id Join film ON film_actor.film_id =film.id  "
 				+ "WHERE film.id = ?";
